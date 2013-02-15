@@ -22,7 +22,7 @@ namespace :calcentral_dev do
   task :update, :roles => :calcentral_dev_host do
     # Take everything offline first.
     script_folder = project_root + ("/script")
-    run "cd #{script_folder}; ./stop-trinidad.sh"
+    run "cd #{script_folder}; ./init.d/calcentral stop"
     # Run db migrate on the first app server
     servers = find_servers_for_task(current_task)
     run "cd #{script_folder}; ./update-build.sh"
@@ -35,7 +35,7 @@ namespace :calcentral_dev do
       end
     end
     servers.each do |server|
-      run "cd #{script_folder}; ./start-trinidad.sh", :hosts => server
+      run "cd #{script_folder}; ./init.d/calcentral start", :hosts => server
     end
   end
 end
