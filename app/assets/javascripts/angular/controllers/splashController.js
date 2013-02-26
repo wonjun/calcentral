@@ -13,7 +13,7 @@
     // Use googleapis.com to convert XML to JSON, via JSONP.
     // JSON_CALLBACK is required in angular (short-circuits the need for a callback function).
     // num=1 gets us the most recent item in the feed.
-    var parsedURL = 'http://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1&callback=JSON_CALLBACK&q=' + feedURL;
+    var parsedURL = 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=1&callback=JSON_CALLBACK&q=' + feedURL;
     $http.jsonp(parsedURL)
     .success(function(data) {
       $scope.blog_entries = (data.responseData ? data.responseData.feed.entries : {});
