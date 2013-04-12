@@ -24,7 +24,7 @@ class SessionsController < ApplicationController
     session[:original_user_id] = session[:user_id] unless session[:original_user_id]
     session[:user_id] = params[:uid]
 
-    redirect_to '/dashboard', :notice => "Assuming user: #{session[:user_id]}"
+    render :nothing => true, :status => 204
   end
 
   def stop_act_as
@@ -37,7 +37,8 @@ class SessionsController < ApplicationController
     end
     Rails.logger.warn "ACT-AS: User #{session[:original_user_id]} acting as #{session[:user_id]} ends"
     session[:user_id] = session[:original_user_id]
-    redirect_to '/dashboard', :notice => "Restoring session as user: #{session[:user_id]}"
+
+    render :nothing => true, :status => 204
   end
 
   def destroy
