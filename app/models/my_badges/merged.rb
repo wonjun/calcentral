@@ -7,14 +7,21 @@ class MyBadges::Merged < MyMergedModel
 
   def init
     @enabled_sources ||= {
-      "bcal" => {access_granted: GoogleProxy.access_granted?(@uid),
-                   source: MyBadges::GoogleCalendar.new(@uid),
-                   pseudo_enabled: GoogleProxy.allow_pseudo_user?},
-      "bdrive" => {access_granted: GoogleProxy.access_granted?(@uid),
-                   source: MyBadges::GoogleDrive.new(@uid),
-                   pseudo_enabled: GoogleProxy.allow_pseudo_user?},
-      "bmail" => {access_granted: GoogleProxy.access_granted?(@uid),
-                   source: MyBadges::GoogleMail.new(@uid)}
+      "bcal" => {
+        access_granted: GoogleProxy.access_granted?(@uid),
+        source: MyBadges::GoogleCalendar.new(@uid),
+        pseudo_enabled: GoogleProxy.allow_pseudo_user?
+      },
+      "bdrive" => {
+        access_granted: GoogleProxy.access_granted?(@uid),
+        source: MyBadges::GoogleDrive.new(@uid),
+        pseudo_enabled: GoogleProxy.allow_pseudo_user?
+      },
+      "bmail" => {
+        access_granted: GoogleProxy.access_granted?(@uid),
+        source: MyBadges::GoogleMail.new(@uid),
+        pseudo_enabled: GoogleProxy.allow_pseudo_user?
+      }
     }
     @service_list ||= @enabled_sources.keys.to_a
     @enabled_sources.select!{|k,v| v[:access_granted] == true}
