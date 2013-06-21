@@ -1,5 +1,3 @@
-require 'lib/cacheable.rb'
-
 class MyMergedModel
   include ActiveAttr::Model
   extend Calcentral::Cacheable

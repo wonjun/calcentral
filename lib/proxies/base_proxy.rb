@@ -1,5 +1,3 @@
-require 'lib/cacheable.rb'
-
 class BaseProxy
   extend Calcentral::Cacheable
 
