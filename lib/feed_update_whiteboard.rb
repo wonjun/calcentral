@@ -3,24 +3,14 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
   include ClassLogger
   extend Calcentral::Cacheable
 
-  def on_message(body)
-    unless body && body[:feed]
+  def on_message(uid)
+    unless uid
       logger.warn "Got empty TorqueBox message; skipping"
       return
     end
-    feed_name = body[:feed]
-    feed_class = Calcentral::MERGED_FEEDS[feed_name]
-    unless feed_class
-      logger.error "Got TorqueBox message but can't determine its origin feed class: body = #{body.inspect}, message = #{message.inspect}"
-      return
-    end
 
-    logger.warn "Processing feed_changed message: body = #{body.inspect}"
-    uid = body[:uid]
-    whiteboard = self.class.get_whiteboard(uid)
-    last_updated = feed_class.get_last_modified(uid)
-    whiteboard[feed_name] = last_updated
-    Rails.cache.write(self.class.cache_key(uid), whiteboard)
+    logger.warn "Processing feed_changed message: uid = #{uid}"
+    self.class.expire(uid)
   end
 
   def on_error(exception)
@@ -30,13 +20,12 @@ class FeedUpdateWhiteboard < TorqueBox::Messaging::MessageProcessor
 
   def self.get_whiteboard(uid)
     self.fetch_from_cache uid do
-      {
-      }
+      whiteboard = {}
+      Calcentral::MERGED_FEEDS.values.each do |feed|
+        whiteboard[feed.name] = feed.get_last_modified(uid)
+      end
+      whiteboard
     end
-  end
-
-  def self.expires_in
-    0
   end
 
 end
