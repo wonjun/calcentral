@@ -10,7 +10,6 @@
     'errorService',
     'popoverService',
     'refreshService',
-    'updatedFeedsService',
     'userService',
     'utilService',
     'widgetService',
@@ -22,7 +21,6 @@
       errorService,
       popoverService,
       refreshService,
-      updatedFeedsService,
       userService,
       utilService,
       widgetService) {
@@ -36,7 +34,6 @@
       error: errorService,
       popover: popoverService,
       refresh: refreshService,
-      updatedFeeds: updatedFeedsService,
       user: userService,
       util: utilService,
       widget: widgetService

@@ -15,7 +15,6 @@
      * @param {Object} data Data that you want to send with the event
      */
     var broadcastApiEvent = function(apiName, eventName, data) {
-      // console.log('calcentral.api.' + apiName + '.' + eventName, data);
       $rootScope.$broadcast('calcentral.api.' + apiName + '.' + eventName, data);
     };
 
@@ -25,6 +24,7 @@
      * @param {String} eventName The name of the event (isUserLoaded)
      */
     var watchEvent = function(apiName, eventName) {
+      //console.log('api.' + apiName + '.events.' + eventName);
       $rootScope.$watch('api.' + apiName + '.events.' + eventName, function(data) {
         broadcastApiEvent(apiName, eventName, data);
       }, true);

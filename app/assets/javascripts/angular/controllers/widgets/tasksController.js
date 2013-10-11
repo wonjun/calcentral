@@ -42,12 +42,11 @@
       });
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
-      if (services && services['MyTasks::Merged']) {
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
         $scope.getTasks();
       }
     });
-    $scope.getTasks();
 
     var toggleStatus = function(task) {
       if (task.status === 'completed') {

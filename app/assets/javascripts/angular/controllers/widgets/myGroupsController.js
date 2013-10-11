@@ -12,12 +12,12 @@
       });
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
-      if (services && services.MyGroups) {
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
         getMyGroups();
       }
     });
-    getMyGroups();
+
   }]);
 
 })(window.calcentral);
