@@ -177,14 +177,13 @@
       });
 
       taskAdderService.toggleAddTask(true);
-    };
+    }
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
-      if (services && services['MyActivities::Merged']) {
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
         getMyActivity();
       }
     });
-    getMyActivity();
 
   }]);
 

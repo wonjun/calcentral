@@ -12,12 +12,11 @@
       });
     };
 
-    $scope.$on('calcentral.api.updatedFeeds.update_services', function(event, services) {
-      if (services && services.MyUpNext) {
+    $scope.$on('calcentral.api.refresh.refreshed', function(event, refreshed) {
+      if (refreshed) {
         getUpNext();
       }
     });
-    getUpNext();
 
   }]);
 

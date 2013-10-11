@@ -7,18 +7,9 @@
     background: $cc-color-navigation;
     overflow: hidden;
     width: 100%;
-    .cc-navigation-bar ul {
-      float: left;
-      width: 100%;
-      & > li > a {
-        float: none;
-        margin: 5px;
-      }
-    }
-    .cc-updated-feeds {
-      clear: both;
+    .cc-navigation-bar ul > li > a {
       float: none;
-      width: 100%;
+      margin: 5px;
     }
   }
   .cc-offcanvas-left {
@@ -45,9 +36,8 @@
   .cc-offcanvas-icon {
     button {
       background: $cc-color-green-dark;
-      border: none;
       margin: 0;
-      padding: 11px 11px 12px;
+      padding: 10px 10px 11px;
       &:hover, &:focus {
         background: $cc-color-green-light;
         text-decoration: none;

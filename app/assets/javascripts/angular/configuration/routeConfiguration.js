@@ -43,7 +43,7 @@
     when('/dashboard', {
       templateUrl: 'templates/dashboard.html',
       controller: 'DashboardController',
-      fireUpdatedFeeds: true
+      shouldRefresh: true
     }).
     when('/finances', {
       templateUrl: 'templates/myfinances.html',
