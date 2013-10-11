@@ -9,28 +9,20 @@
       $timeout) {
 
     var events = {
-      is_loading: false,
       update_services: {},
       services_with_updates: {}
     };
     var services = {};
-    var initial_polling_time = 10; // Initial polling time in seconds
+    var start_polling_time = 10; // Start polling time in seconds
     var polling_time = 60; // Polling time in seconds
 
     // In the first iteration, we only update the services on the dashboard page.
     var to_update_services = ['MyActivities::Merged', 'MyClasses', 'MyGroups', 'MyTasks::Merged', 'MyUpNext'];
 
-    /**
-     * Check whether there are updated to any of the feeds.
-     * @return {Boolean} True if there are any updates
-     */
     var hasUpdates = function() {
       return !!Object.keys(events.services_with_updates).length;
     };
 
-    /**
-     * Refresh all the feeds that have actual changes.
-     */
     var refreshFeeds = function() {
       events.update_services = events.services_with_updates;
 
@@ -42,13 +34,7 @@
       }, 1);
     };
 
-    /**
-     * Parse the updated feeds
-     * @param {Object} data JSON coming back from the server, contains which feeds need an update
-     * @param {Boolean} auto_refresh Whether or not to automatically update the feeds or not
-     */
-    var parseUpdatedFeeds = function(data, auto_refresh) {
-
+    var getUpdatedFeeds = function(data) {
       // When there is no data, don't do anything.
       if (!data) {
         return;
@@ -65,46 +51,18 @@
           }
         }
       }
-
-      if (auto_refresh) {
-        refreshFeeds();
-      }
     };
 
-    var polling = function(auto_refresh) {
-      $http.get('/api/my/updated_feeds').success(function(data) {
-      //$http.get('/dummy/json/updated_feeds.json').success(function(data) {
-        parseUpdatedFeeds(data, auto_refresh);
-      });
-
-      if (events.is_loading) {
-
-        // Second time we poll at 10 seconds and automatically refresh the feeds
-        $timeout(function() {
-          events.is_loading = false;
-          polling(true);
-        }, initial_polling_time * 1000);
-      } else {
-        // Now we poll every 60 seconds
-        $timeout(polling, polling_time * 1000);
-      }
+    var polling = function() {
+      $http.get('/api/my/updated_feeds').success(getUpdatedFeeds);
+      //$http.get('/dummy/json/updated_feeds.json').success(getUpdatedFeeds);
+      $timeout(polling, polling_time * 1000);
     };
 
-    /**
-     * Initiate the polling to the back-end to check whether there are any updates
-     */
     var startPolling = function() {
-
-      // Show the loading spinning indicator
-      events.is_loading = true;
-
-      // First time we poll at 0 seconds
-      polling();
+      $timeout(polling, start_polling_time * 1000);
     };
 
-    /**
-     * Expose the public methods
-     */
     return {
       events: events,
       hasUpdates: hasUpdates,
