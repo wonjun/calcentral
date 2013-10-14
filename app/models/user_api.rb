@@ -103,7 +103,7 @@ class UserApi < MyMergedModel
         :california_residency => @campus_attributes[:california_residency],
         :reg_status => @campus_attributes[:reg_status],
         :reg_block => get_reg_blocks,
-        :has_academics_tab => (@campus_attributes[:roles][:student] ||
+        :has_academics_tab => @campus_attributes && @campus_attributes[:roles] && (@campus_attributes[:roles][:student] ||
           @campus_attributes[:roles][:faculty] ||
           campus_courses_proxy.has_instructor_history? ||
           campus_courses_proxy.has_student_history?
