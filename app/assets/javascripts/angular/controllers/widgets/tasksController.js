@@ -9,6 +9,7 @@
     // Initial mode for Tasks view
     $scope.currentTaskMode = 'scheduled';
     $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
+    $scope.taskLimit = 2
 
     var calculateCounts = function() {
       $scope.counts = {
@@ -32,6 +33,7 @@
       $scope.completedTasks = $filter('orderBy')($scope.tasks.filter(filterCompleted), 'completedDate.epoch', true);
       calculateCounts();
     };
+
 
     $scope.getTasks = function() {
       return $http.get('/api/my/tasks').success(function(data) {

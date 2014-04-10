@@ -70,11 +70,12 @@
             <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list">
               <li
-                data-ng-repeat="task in futureTasks"
+                data-ng-repeat="task in (futureTasks | limitTo: taskLimit)"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
             </ul>
+            <button ng-click="taskLimit = taskLimit + 2">Show more...</button>
             <p data-ng-show="!futureTasks.length" class="cc-widget-text">
               There are currently no {{currentTaskMode}} tasks/assignments that are due in the future.
             </p>
