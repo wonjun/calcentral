@@ -42,9 +42,14 @@
             <h3 class="cc-widget-tasks-section-label"><span class="cc-widget-tasks-section-label-red">Overdue</span> <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-red" data-ng-bind="overdueTasks.length"></span> <span class="cc-right">Due</span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-red">
               <li
-                data-ng-repeat="task in overdueTasks"
+                data-ng-repeat="task in overdueTasks | limitTo: overdueLimit"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </li>
+              <li ng-show="showMoreOverdue">
+                <div class ="cc-widget-activities-text-column">
+                  <button class="cc-button cc-widget-show-more" ng-click="showMoreTasksOverdue">Show {{showMoreVariableOverdue}} More</button>
+                </div>
               </li>
             </ul>
             <p data-ng-show="!overdueTasks.length" class="cc-widget-text">
@@ -56,9 +61,14 @@
             <h3 class="cc-widget-tasks-section-label">Today <span class="cc-widget-tasks-section-label-count cc-widget-tasks-section-label-count-green" data-ng-bind="dueTodayTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list cc-widget-tasks-list-green">
               <li
-                data-ng-repeat="task in dueTodayTasks"
+                data-ng-repeat="task in dueTodayTasks | limitTo: dueTodayLimit"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                   <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
+              </li>
+              <li ng-show="showMoreDueToday">
+                <div class ="cc-widget-activities-text-column">
+                  <button class="cc-button cc-widget-show-more" ng-click="showMoreTasksDueToday">Show {{showMoreVariableDueToday}} More</button>
+                </div>
               </li>
             </ul>
             <p data-ng-show="!dueTodayTasks.length" class="cc-widget-text">
@@ -70,12 +80,16 @@
             <h3 class="cc-widget-tasks-section-label">Future <span class="cc-widget-tasks-section-label-count" data-ng-bind="futureTasks.length"></span></h3>
             <ul class="cc-widget-tasks-list">
               <li
-                data-ng-repeat="task in (futureTasks | limitTo: taskLimit)"
+                data-ng-repeat="task in futureTasks | limitTo: futureLimit"
                 data-ng-class="{'cc-widget-list-selected': task.show}">
                 <div data-ng-include src="'templates/dashboard_task_loop.html'"></div>
               </li>
+              <li ng-show="showMoreFuture">
+                <div class ="cc-widget-activities-text-column">
+                  <button class="cc-button cc-widget-show-more" ng-click="showMoreTasksFuture">Show {{showMoreVariableFuture}} More</button>
+                </div>
+              </li>
             </ul>
-            <button ng-click="taskLimit = taskLimit + 2">Show more...</button>
             <p data-ng-show="!futureTasks.length" class="cc-widget-text">
               There are currently no {{currentTaskMode}} tasks/assignments that are due in the future.
             </p>

@@ -159,7 +159,6 @@
         typeToIcon: typeToIcon
       };
     };
-    $scope.activityLimit = 10;
 
     var getMyActivity = function() {
       $scope.process = {
@@ -192,6 +191,32 @@
       }
     });
     getMyActivity();
+
+
+    // Show more button implementation
+
+    $scope.activityLimit = 10;
+    $scope.showMoreIncrement = 10;
+
+    // ng-click to show more elements
+    $scope.showMoreActivities = function() {
+      $scope.activityLimit += $scope.showMoreIncrement;
+    };
+
+    // ng-show for only when more elements left to be shown
+    $scope.showMore = function(){
+      return $scope.activities.length > $scope.activityLimit;
+    };
+
+    /**
+    * If there are < "showMoreIncrement" elements remaining,
+    * it should show "Show X More" where X is the # of remaining
+    * elements
+    */
+
+    $scope.showMoreVariable = function() {
+      return Math.min($scope.showMoreIncrement, $scope.activities.length - $scope.activityLimit);
+    };
 
   });
 

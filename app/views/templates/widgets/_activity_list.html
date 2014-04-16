@@ -77,9 +77,12 @@
           </div>
         </div>
       </li>
+      <li ng-show="showMore()">
+        <div class ="cc-widget-activities-text-column">
+          <button class="cc-button cc-widget-show-more" ng-click="showMoreActivities()">Show {{showMoreVariable()}} More</button>
+        </div>
+      </li>
     </ul>
-    <button ng-click="activityLimit = activityLimit + 3">Show more...</button>
-
     <div data-ng-show="!activities.length" class="cc-widget-text">
       You have no recent activity at this time.
     </div>

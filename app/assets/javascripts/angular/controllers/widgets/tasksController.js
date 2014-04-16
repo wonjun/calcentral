@@ -9,7 +9,6 @@
     // Initial mode for Tasks view
     $scope.currentTaskMode = 'scheduled';
     $scope.taskModes = ['scheduled', 'unscheduled', 'completed'];
-    $scope.taskLimit = 2
 
     var calculateCounts = function() {
       $scope.counts = {
@@ -161,6 +160,42 @@
     var filterCompleted = function(task) {
       return (task.status === 'completed');
     };
+
+    // Show more button implementation
+    $scope.overdueLimit = 7;
+    $scope.dueTodayLimit = 7;
+    $scope.futureLimit = 7;
+    $scope.showMoreIncrement = 5;
+
+    // ng-click to show more elements
+    var showMoreTasks = function(categoryLimit) {
+      categoryLimit += $scope.showMoreIncrement;
+    };
+
+    $scope.showMoreTasksOverdue = showMoreTasks($scope.overdueLimit);
+    $scope.showMoreTasksDueToday = showMoreTasks($scope.dueTodayLimit);
+    $scope.showMoreTasksFuture = showMoreTasks($scope.futureLimit);
+
+    // ng-show for only when more elements left to be shown
+    var showMore = function(categoryLength, categoryLimit){
+      return categoryLength > categoryLimit;
+    };
+    $scope.showMoreOverdue = showMore($scope.overdueTasks.length, $scope.overdueLimit);
+    $scope.showMoreDueToday = showMore($scope.dueTodayTasks.length, $scope.dueTodayLimit);
+    $scope.showMoreFuture = showMore($scope.futureTasks.length, $scope.futureLimit);
+
+    /**
+    * If there are < "showMoreIncrement" elements remaining,
+    * it should show "Show X More" where X is the # of remaining
+    * elements
+    */
+    var showMoreVariable = function(categoryLength, categoryLimit) {
+      return Math.min($scope.showMoreIncrement, categoryLength - categoryLimit);
+    };
+
+    $scope.showMoreVariableOverdue = showMoreVariable($scope.overdueTasks.length, $scope.overdueLimit);
+    $scope.showMoreVariableDueToday = showMoreVariable($scope.dueTodayTasks.length, $scope.dueTodayLimit);
+    $scope.showMoreVariableFuture = showMoreVariable($scope.futureTasks.length, $scope.futureLimit);
 
   });
 
